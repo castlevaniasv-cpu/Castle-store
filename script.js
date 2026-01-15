@@ -132,18 +132,24 @@ function comprar() {
     let total = 0;
     let temItem = false;
 
-    // GERA ID DO PEDIDO
-    const pedidoId = "CASTLE-" + Date.now().toString().slice(-6);
+    // DATA E HORA
+    const agora = new Date();
+    const data = agora.toLocaleDateString("pt-BR");
+    const hora = agora.toLocaleTimeString("pt-BR");
 
-    let msg = `🧾 Pedido #${pedidoId}%0A`;
-    msg += `👤 Nick: ${nick}%0A%0A📦 Itens:%0A`;
+    // ID DO PEDIDO
+    const pedidoId = "CASTLE-" + agora.getTime().toString().slice(-6);
+
+    let msg = `🧾 Pedido #${pedidoId}\n`;
+    msg += `📅 Data: ${data} ⏰ ${hora}\n`;
+    msg += `👤 Nick: ${nick}\n\n📦 Itens:\n`;
 
     for (let item in carrinho) {
         if (carrinho[item] > 0) {
             temItem = true;
             let preco = Object.values(itens).flat().find(x => x.nome === item).preco;
             total += preco * carrinho[item];
-            msg += `• ${carrinho[item]}x ${item}%0A`;
+            msg += `• ${carrinho[item]}x ${item}\n`;
         }
     }
 
@@ -158,13 +164,16 @@ function comprar() {
     // CUPOM
     if (cupomAtivo) {
         totalComDesconto -= totalComDesconto * (descontoAtivo / 100);
-        msg += `%0A🏷️ Cupom: ${cupomAtivo} (-${descontoAtivo}%)%0A`;
+        msg += `\n🏷️ Cupom: ${cupomAtivo} (-${descontoAtivo}%)\n`;
     }
 
-    msg += `%0A💰 Total sem desconto: R$ ${totalSemDesconto.toFixed(2).replace(".", ",")}%0A`;
+    msg += `\n💰 Total sem desconto: R$ ${totalSemDesconto.toFixed(2).replace(".", ",")}\n`;
     msg += `💸 Total com desconto: R$ ${totalComDesconto.toFixed(2).replace(".", ",")}`;
 
-    window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, "_blank");
+    // CODIFICA CORRETAMENTE O TEXTO
+    const msgEncoded = encodeURIComponent(msg);
+
+    window.open(`https://wa.me/${WHATSAPP}?text=${msgEncoded}`, "_blank");
 }
 
 // INIT
