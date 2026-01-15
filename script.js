@@ -129,19 +129,40 @@ function comprar() {
     let nick = document.getElementById("nick").value.trim();
     if (!nick) return alert("Digite seu nick!");
 
-    let msg = `🛒 Pedido de Compra%0A👤 Nick: ${nick}%0A%0A📦 Itens:%0A`;
     let total = 0;
+    let temItem = false;
+
+    // GERA ID DO PEDIDO
+    const pedidoId = "CASTLE-" + Date.now().toString().slice(-6);
+
+    let msg = `🧾 Pedido #${pedidoId}%0A`;
+    msg += `👤 Nick: ${nick}%0A%0A📦 Itens:%0A`;
 
     for (let item in carrinho) {
         if (carrinho[item] > 0) {
+            temItem = true;
             let preco = Object.values(itens).flat().find(x => x.nome === item).preco;
             total += preco * carrinho[item];
             msg += `• ${carrinho[item]}x ${item}%0A`;
         }
     }
 
-    if (cupomAtivo) total -= total * (descontoAtivo / 100);
-    msg += `%0A💵 Total: R$ ${total.toFixed(2).replace(".", ",")}`;
+    // BLOQUEIA SE NÃO TIVER ITEM
+    if (!temItem) {
+        return alert("Adicione pelo menos um item ao carrinho!");
+    }
+
+    const totalSemDesconto = total;
+    let totalComDesconto = total;
+
+    // CUPOM
+    if (cupomAtivo) {
+        totalComDesconto -= totalComDesconto * (descontoAtivo / 100);
+        msg += `%0A🏷️ Cupom: ${cupomAtivo} (-${descontoAtivo}%)%0A`;
+    }
+
+    msg += `%0A💰 Total sem desconto: R$ ${totalSemDesconto.toFixed(2).replace(".", ",")}%0A`;
+    msg += `💸 Total com desconto: R$ ${totalComDesconto.toFixed(2).replace(".", ",")}`;
 
     window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, "_blank");
 }
