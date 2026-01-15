@@ -7,24 +7,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <!-- BANNER -->
     <div class="banner">
         <img src="https://i.imgur.com/XKBW6Rl.jpeg" alt="Castlevania Store Banner">
     </div>
-    <!-- BOTÃO DE PARTÍCULAS -->
-<div class="particle-toggle" onclick="toggleParticles()">
-    <div class="particle-icon">🩸</div>
-</div>
 
-<!-- CONTAINER DAS PARTÍCULAS -->
-<div id="particles-container"></div>
+    <!-- BOTÃO DE PARTÍCULAS -->
+    <div class="particle-toggle" onclick="toggleParticles()">
+        <div class="particle-icon">🩸</div>
+    </div>
+
+    <!-- CONTAINER DAS PARTÍCULAS -->
+    <div id="particles-container"></div>
 
     <!-- TABS -->
-    
     <div class="tabs">
         <div class="tab active" onclick="openTab('cash', this)">💰 Cash</div>
         <div class="tab" onclick="openTab('vip', this)">👑 VIP</div>
         <div class="tab" onclick="openTab('perm', this)">🔐 Permissão</div>
+        <div class="tab" onclick="openTab('chaves', this)">🗝️ Chaves</div>
     </div>
 
     <!-- CONTAINER -->
@@ -33,6 +35,7 @@
         <div id="cash" class="section"></div>
         <div id="vip" class="section" style="display:none"></div>
         <div id="perm" class="section" style="display:none"></div>
+        <div id="chaves" class="section" style="display:none"></div>
 
         <!-- INPUTS -->
         <input class="nickz" id="nick" placeholder="Nick no servidor">
