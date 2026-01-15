@@ -173,8 +173,10 @@ function comprar() {
     // CODIFICA CORRETAMENTE O TEXTO
     const msgEncoded = encodeURIComponent(msg);
 
-    window.open(`https://wa.me/${WHATSAPP}?text=${msgEncoded}`, "_blank");
-}
+    window.open(
+    `https://api.whatsapp.com/send?phone=${WHATSAPP}&text=${msgEncoded}`,
+    "_blank"
+);}
 
 // INIT
 document.addEventListener("DOMContentLoaded", () => {
