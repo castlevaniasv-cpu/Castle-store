@@ -24,10 +24,10 @@ const itens = {
         { nome: "Baú 5", preco: 20, img: "https://i.imgur.com/MT9HwCW.png" }
     ],
     chaves: [
-        { nome: "Chave Vital", preco: 1.90, img: "https://bright-lime-guxcq9fajo.edgeone.app/file_00000000e7a071f6a0116608a976475e.png" },
-        { nome: "Chave Gama", preco: 4.00, img: "https://bright-lime-guxcq9fajo.edgeone.app/file_00000000e7a071f6a0116608a976475e.png" },
-        { nome: "Chave Beta", preco: 6.00, img: "https://bright-lime-guxcq9fajo.edgeone.app/file_00000000e7a071f6a0116608a976475e.png" },
-        { nome: "Chave Alfa", preco: 8.00, img: "https://bright-lime-guxcq9fajo.edgeone.app/file_00000000e7a071f6a0116608a976475e.png" }
+        { nome: "Chave Vital", preco: 1.90, img: "https://i.postimg.cc/BbVGLw8c/file-00000000e7a071f6a0116608a976475e.png" },
+        { nome: "Chave Gama", preco: 4.00, img: "https://i.postimg.cc/BbVGLw8c/file-00000000e7a071f6a0116608a976475e.png" },
+        { nome: "Chave Beta", preco: 6.00, img: "https://i.postimg.cc/BbVGLw8c/file-00000000e7a071f6a0116608a976475e.png" },
+        { nome: "Chave Alfa", preco: 8.00, img: "https://i.postimg.cc/BbVGLw8c/file-00000000e7a071f6a0116608a976475e.png" }
     ]
 };
 
