@@ -22,52 +22,35 @@ const itens = {
         { nome: "Baú 3", preco: 20, img: "https://i.imgur.com/MT9HwCW.png" },
         { nome: "Baú 4", preco: 20, img: "https://i.imgur.com/MT9HwCW.png" },
         { nome: "Baú 5", preco: 20, img: "https://i.imgur.com/MT9HwCW.png" }
+    ],
+    chaves: [
+        { nome: "Chave Vital", preco: 1.90, img: "https://bright-lime-guxcq9fajo.edgeone.app/file_00000000e7a071f6a0116608a976475e.png" },
+        { nome: "Chave Gama", preco: 4.00, img: "https://bright-lime-guxcq9fajo.edgeone.app/file_00000000e7a071f6a0116608a976475e.png" },
+        { nome: "Chave Beta", preco: 6.00, img: "https://bright-lime-guxcq9fajo.edgeone.app/file_00000000e7a071f6a0116608a976475e.png" },
+        { nome: "Chave Alfa", preco: 8.00, img: "https://bright-lime-guxcq9fajo.edgeone.app/file_00000000e7a071f6a0116608a976475e.png" }
     ]
 };
 
-// CUPONS DE DESCONTO
+// CUPONS
 const cupons = {
-    CASTLE10: 10,
-    VIP5: 5,
-    VIP15: 15,
-    CASTLEVAL15: 15,
-    NATAL10: 10,
-    ANO2025: 10,
-    PROMO5: 5,
-    PROMO10: 10,
-    PROMO15: 15,
-    PROMO20: 20
+    CASTLE10: 10, VIP5: 5, VIP15: 15, CASTLEVAL15: 15,
+    NATAL10: 10, ANO2025: 10, PROMO5: 5, PROMO10: 10,
+    PROMO15: 15, PROMO20: 20
 };
 
-// VARIÁVEIS GLOBAIS
 let carrinho = {};
 let cupomAtivo = null;
 let descontoAtivo = 0;
 
-// FUNÇÕES
-
-/**
- * Alterna entre as abas da loja
- * @param {string} id - ID da aba a ser aberta
- * @param {HTMLElement} el - Elemento da aba clicada
- */
+// TABS
 function openTab(id, el) {
-    // Esconde todas as seções
     document.querySelectorAll(".section").forEach(s => s.style.display = "none");
-    
-    // Mostra a seção selecionada
     document.getElementById(id).style.display = "block";
-    
-    // Remove a classe active de todas as tabs
     document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    
-    // Adiciona a classe active na tab clicada
     el.classList.add("active");
 }
 
-/**
- * Renderiza os itens em todas as abas
- */
+// RENDER
 function render() {
     for (let aba in itens) {
         let html = "";
@@ -75,7 +58,7 @@ function render() {
             html += `
             <div class="item">
                 <div class="item-info">
-                    <img src="${i.img}" alt="${i.nome}">
+                    <img src="${i.img}">
                     <div>
                         <strong>${i.nome}</strong><br>
                         R$ ${i.preco.toFixed(2).replace(".", ",")}
@@ -90,24 +73,84 @@ function render() {
         });
         document.getElementById(aba).innerHTML = html;
     }
-    
-    // Inicializa o carrinho
+
     for (let aba in itens) {
-        itens[aba].forEach(i => {
-            carrinho[i.nome] = 0;
-        });
+        itens[aba].forEach(i => carrinho[i.nome] = 0);
     }
 }
 
-/**
- * Altera a quantidade de um item no carrinho
- * @param {string} item - Nome do item
- * @param {number} v - Valor a ser adicionado/subtraído (+1 ou -1)
- */
+// ALTERAR
 function alterar(item, v) {
-    carrinho[item] = Math.max((carrinho[item] || 0) + v, 0);
+    carrinho[item] = Math.max(carrinho[item] + v, 0);
     document.getElementById("q-" + item).innerText = carrinho[item];
     atualizar();
+}
+
+// CUPOM
+function aplicarCupom() {
+    let c = document.getElementById("cupom").value.toUpperCase();
+    let msg = document.getElementById("msgCupom");
+
+    if (!cupons[c]) {
+        msg.innerText = "❌ Cupom inválido";
+        msg.style.color = "#ff3333";
+        cupomAtivo = null;
+        descontoAtivo = 0;
+    } else {
+        cupomAtivo = c;
+        descontoAtivo = cupons[c];
+        msg.innerText = `✅ Cupom aplicado: -${descontoAtivo}%`;
+        msg.style.color = "#33ff33";
+    }
+    atualizar();
+}
+
+// ATUALIZAR
+function atualizar() {
+    let total = 0;
+    let lista = [];
+
+    for (let item in carrinho) {
+        if (carrinho[item] > 0) {
+            let preco = Object.values(itens).flat().find(x => x.nome === item).preco;
+            total += preco * carrinho[item];
+            lista.push(`${carrinho[item]}x ${item}`);
+        }
+    }
+
+    if (cupomAtivo) total -= total * (descontoAtivo / 100);
+
+    document.getElementById("resumo").innerText = lista.length ? lista.join(", ") : "Nenhum item";
+    document.getElementById("total").innerText = "Total: R$ " + total.toFixed(2).replace(".", ",");
+}
+
+// COMPRAR
+function comprar() {
+    let nick = document.getElementById("nick").value.trim();
+    if (!nick) return alert("Digite seu nick!");
+
+    let msg = `🛒 Pedido de Compra%0A👤 Nick: ${nick}%0A%0A📦 Itens:%0A`;
+    let total = 0;
+
+    for (let item in carrinho) {
+        if (carrinho[item] > 0) {
+            let preco = Object.values(itens).flat().find(x => x.nome === item).preco;
+            total += preco * carrinho[item];
+            msg += `• ${carrinho[item]}x ${item}%0A`;
+        }
+    }
+
+    if (cupomAtivo) total -= total * (descontoAtivo / 100);
+    msg += `%0A💵 Total: R$ ${total.toFixed(2).replace(".", ",")}`;
+
+    window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, "_blank");
+}
+
+// INIT
+document.addEventListener("DOMContentLoaded", () => {
+    render();
+    atualizar();
+});    atualizar();
 }
 
 /**
