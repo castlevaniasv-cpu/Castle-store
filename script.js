@@ -2,12 +2,12 @@ const WHATSAPP = "5588981550733";
 
 const itens = {
   cash: [
-    { nome: "250 Cash", preco: 0.25, valor: 200, img: "https://i.imgur.com/K5C6uHc.png" },
+    { nome: "200 Cash", preco: 0.20, valor: 200, img: "https://i.imgur.com/K5C6uHc.png" },
     { nome: "500 Cash", preco: 0.50, valor: 500, img: "https://i.imgur.com/K5C6uHc.png" },
     { nome: "1k Cash", preco: 1.00, valor: 1000, img: "https://i.imgur.com/K5C6uHc.png" },
     { nome: "5k Cash", preco: 5.00, valor: 5000, img: "https://i.imgur.com/K5C6uHc.png" },
     { nome: "10k Cash", preco: 10.00, valor: 10000, img: "https://i.imgur.com/K5C6uHc.png" },
-    { nome: "15k Cash", preco: 17.00, valor: 15000, img: "https://i.imgur.com/K5C6uHc.png" },
+    { nome: "15k Cash", preco: 15.00, valor: 15000, img: "https://i.imgur.com/K5C6uHc.png" },
     { nome: "20k Cash", preco: 20.00, valor: 20000, img: "https://i.imgur.com/K5C6uHc.png" },
     { nome: "30k Cash", preco: 30.00, valor: 30000, img: "https://i.imgur.com/K5C6uHc.png" }
   ],
