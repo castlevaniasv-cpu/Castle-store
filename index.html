@@ -13,14 +13,6 @@
         <img src="https://i.imgur.com/XKBW6Rl.jpeg" alt="Castlevania Store Banner">
     </div>
 
-    <!-- BOTÃO DE PARTÍCULAS -->
-    <div class="particle-toggle" onclick="toggleParticles()">
-        <div class="particle-icon">🩸</div>
-    </div>
-
-    <!-- CONTAINER DAS PARTÍCULAS -->
-    <div id="particles-container"></div>
-
     <!-- TABS -->
     <div class="tabs">
         <div class="tab active" onclick="openTab('cash', this)">💰 Cash</div>
@@ -31,13 +23,11 @@
 
     <!-- CONTAINER -->
     <div class="container">
-        <!-- SECTIONS -->
         <div id="cash" class="section"></div>
         <div id="vip" class="section" style="display:none"></div>
         <div id="perm" class="section" style="display:none"></div>
         <div id="chaves" class="section" style="display:none"></div>
 
-        <!-- INPUTS -->
         <input class="nickz" id="nick" placeholder="Nick no servidor">
 
         <div class="cupom-container">
@@ -45,13 +35,17 @@
             <button onclick="aplicarCupom()" class="btn-ativar">Ativar</button>
         </div>
 
-        <!-- MENSAGENS -->
         <p id="msgCupom"></p>
         <p id="resumo">Nenhum item</p>
         <strong class="lsti" id="total">Total: R$ 0,00</strong>
 
-        <!-- BOTÃO COMPRAR -->
         <div class="buy" onclick="comprar()">Comprar</div>
+
+        <!-- BOTÃO DO GRUPO -->
+        <div class="buy" style="margin-top:8px;background:#1a1a1a;border:1px solid #ff0033"
+             onclick="window.open('https://chat.whatsapp.com/GF3YAUnwf0iKS3ysGTfqHL','_blank')">
+            💬 Entrar no Grupo
+        </div>
     </div>
 
     <script src="script.js"></script>
