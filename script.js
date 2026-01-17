@@ -113,20 +113,46 @@ function comprar() {
   let nick = nickInput.value.trim();
   if (!nick) return alert("Digite seu nick!");
 
-  let msg = `🧾 Pedido\n👤 Nick: ${nick}\n\n📦 Itens:\n`;
-  let total = 0;
+  // Número do pedido
+  const pedido = "CASTLE-" + Math.floor(100000 + Math.random() * 900000);
+
+  // Data e hora
+  const agora = new Date();
+  const data = agora.toLocaleDateString("pt-BR");
+  const hora = agora.toLocaleTimeString("pt-BR");
+
+  let msg = `🧾 Pedido #${pedido}\n`;
+  msg += `📅 Data: ${data} ⏰ ${hora}\n\n`;
+  msg += `👤 Nick: ${nick}\n\n`;
+  msg += `📦 Itens:\n`;
+
+  let totalSemDesconto = 0;
+  let temItem = false;
 
   Object.values(itens).flat().forEach(i => {
     if (carrinho[i.nome] > 0) {
-      total += i.preco * carrinho[i.nome];
+      temItem = true;
+      totalSemDesconto += i.preco * carrinho[i.nome];
       msg += `• ${carrinho[i.nome]}x ${i.nome}\n`;
     }
   });
 
-  if (cupomAtivo) total -= total * (descontoAtivo / 100);
-  msg += `\n💰 Total: R$ ${total.toFixed(2).replace(".", ",")}`;
+  if (!temItem) return alert("Adicione pelo menos um item ao carrinho!");
 
-  window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP}&text=${encodeURIComponent(msg)}`, "_blank");
+  let totalComDesconto = totalSemDesconto;
+
+  if (cupomAtivo) {
+    totalComDesconto -= totalSemDesconto * (descontoAtivo / 100);
+    msg += `\n🏷️ Cupom: ${cupomAtivo} (-${descontoAtivo}%)\n`;
+  }
+
+  msg += `\n💰 Total sem desconto: R$ ${totalSemDesconto.toFixed(2).replace(".", ",")}`;
+  msg += `\n💸 Total com desconto: R$ ${totalComDesconto.toFixed(2).replace(".", ",")}`;
+
+  window.open(
+    `https://api.whatsapp.com/send?phone=${WHATSAPP}&text=${encodeURIComponent(msg)}`,
+    "_blank"
+  );
 }
 
 document.addEventListener("DOMContentLoaded", () => {
